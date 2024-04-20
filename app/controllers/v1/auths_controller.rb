@@ -1,5 +1,6 @@
 class V1::AuthsController < ApplicationController
   before_action :check_registered_user, only: :sign_up
+  skip_before_action :authenticate_user!
 
   def sign_up
     user = User.new(user_params)
