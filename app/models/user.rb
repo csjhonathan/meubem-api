@@ -8,5 +8,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-         
+  
+  has_one :account
+  after_create :create_account
+
+  def create_account
+    Account.create(user: self)
+  end
 end

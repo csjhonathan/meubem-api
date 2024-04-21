@@ -6,5 +6,10 @@ Rails.application.routes.draw do
       post :sign_up
       post :sign_in
     end
+
+    resource :account do
+      get :show
+    end
+    
   end
 end
