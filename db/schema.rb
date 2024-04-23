@@ -17,7 +17,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_20_235907) do
 
   create_table "accounts", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "balance", default: "0"
+    t.integer "balance", default: 0
     t.datetime "discarded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -27,8 +27,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_20_235907) do
   create_table "transactions", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.string "value"
-    t.string "type"
+    t.integer "value"
+    t.string "kind"
     t.bigint "account_id", null: false
     t.datetime "discarded_at"
     t.datetime "created_at", null: false

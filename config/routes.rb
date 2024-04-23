@@ -12,5 +12,7 @@ Rails.application.routes.draw do
         get :account
       end
     end
+
+    resources :transactions
   end
 end
