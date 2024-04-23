@@ -37,7 +37,10 @@ class V1::AuthsController < ApplicationController
     params.require(:user).permit(
       :email,
       :password,
-      :password_confirmation
+      :password_confirmation,
+      :name,
+      :display_name,
+      :birthdate
     )
   end
 end
