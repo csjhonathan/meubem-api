@@ -26,6 +26,9 @@ gem "jwt", "~> 2.7"
 # Use CPF and CNPJ for validate
 gem "cpf_cnpj"
 
+# CORS support for Rack 
+gem 'rack-cors'
+
 # User dotenv to load environment variables from .env into ENV in development
 gem "dotenv-rails"
 

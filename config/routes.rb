@@ -7,12 +7,9 @@ Rails.application.routes.draw do
       post :sign_in
     end
 
-    resources :users do
-      collection do
-        get :account
-      end
+    resource :user do
+      get :show
     end
-
     resources :transactions
   end
 end
