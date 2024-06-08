@@ -29,6 +29,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_20_235907) do
     t.string "description"
     t.integer "value"
     t.string "kind"
+    t.integer "position"
     t.bigint "account_id", null: false
     t.datetime "discarded_at"
     t.datetime "created_at", null: false

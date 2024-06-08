@@ -12,11 +12,11 @@ class Transaction < ApplicationRecord
   validates :value, presence: true, numericality: { greater_than: 0 }
   validates :kind, presence: true
 
-  before_save :update_account_balance
+  before_save :update_account_balance, :calculate_positions
   before_update :remove_value_from_account_balance
 
   def update_account_balance
-    account = Account.find(account_id)
+    account = Account.find(self.account_id)
     
     if self.kind_was.present? && kind_changed? 
       if self.kind == "income"
@@ -37,8 +37,28 @@ class Transaction < ApplicationRecord
     account.save
   end
 
+  def calculate_positions
+    transactions = Transaction.where(account_id: self.account_id)
+    if self.position.nil?
+      self.position = transactions.maximum(:position).to_i + 1
+    elsif self.discarded_at.present?
+      transactions.where("position > ?", self.position).each do |transaction|
+        transaction.update_columns(position: transaction.position - 1)
+      end
+    else 
+      if self.position > self.position_was
+        transactions.where("position > ? AND position <= ?", self.position_was, self.position).each do |transaction|
+          transaction.update_columns(position: transaction.position - 1)
+        end
+      elsif self.position < self.position_was
+        transactions.where("position >= ? AND position < ?", self.position, self.position_was).each do |transaction|
+          transaction.update_columns(position: transaction.position + 1)
+        end
+      end
+    end
+  end
   def remove_value_from_account_balance
-    account = Account.find(account_id)
+    account = Account.find(self.account_id)
 
     if self.discarded_at.present?
       if self.kind == "income"

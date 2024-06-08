@@ -2,7 +2,7 @@ class V1::TransactionsController < ApplicationController
   before_action :set_transaction, only: [:show, :update, :destroy]
 
   def index
-    transactions = Transaction.where(account_id: @current_user.account.id)
+    transactions = Transaction.where(account_id: @current_user.account.id).order(position: :asc)
     render json: { data: transactions}, status: :ok
   end
 
@@ -29,7 +29,7 @@ class V1::TransactionsController < ApplicationController
 
   def destroy
     if @transaction.discard
-      render json: { data: "Transação deletada com sucesso!" }, status: :ok
+      render json: { data: @transaction, message: "Transação deletada com sucesso!" }, status: :ok
     else
       render json: { data: @transaction.errors }, status: :unprocessable_entity
     end
@@ -49,6 +49,7 @@ class V1::TransactionsController < ApplicationController
       :value,
       :kind,
       :account_id, 
+      :position
     )
   end
 end

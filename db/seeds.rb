@@ -9,3 +9,15 @@ if User.all.empty?
     password_confirmation: "123123"
   )
 end
+
+if Transaction.all.empty?
+  puts "Criando transações padrão"
+  for i in 1..4 do
+    Transaction.create!(
+      name: "Entrada #{i}",
+      value: 2000,
+      kind: "income",
+      account_id: Account.first.id
+    )
+  end
+end
