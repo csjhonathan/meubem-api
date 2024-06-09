@@ -49,7 +49,8 @@ class V1::TransactionsController < ApplicationController
       :value,
       :kind,
       :account_id, 
-      :position
+      :position,
+      :date
     )
   end
 end

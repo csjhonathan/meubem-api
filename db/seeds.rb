@@ -12,12 +12,13 @@ end
 
 if Transaction.all.empty?
   puts "Criando transações padrão"
-  for i in 1..4 do
+  for i in 1..5 do
     Transaction.create!(
       name: "Entrada #{i}",
       value: 2000,
       kind: "income",
-      account_id: Account.first.id
+      account_id: Account.first.id,
+      date: DateTime.parse(DateTime.now.to_s, "%d/%m/%Y").strftime("%m/%d/%Y")
     )
   end
 end

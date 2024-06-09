@@ -7,6 +7,7 @@ class CreateTransactions < ActiveRecord::Migration[7.1]
       t.string :kind
       t.integer :position
       t.references :account, null: false, foreign_key: true
+      t.string :date
       
       t.datetime :discarded_at
       t.timestamps
